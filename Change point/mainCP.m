@@ -5,11 +5,9 @@
 % modified from code by Abhineet Gupta, 
 % last modified by Jack Baker, 9/9/2015
 
-clear; clc; close all;
-
 % plot specs
-label_size = 9;
-axis_size = 8;
+label_size = 9; % font size for labels
+axis_size = 8;  % font size for axis numbers
 
 
 %% specify occurence times of earthquakes
@@ -35,7 +33,6 @@ for i = 1:length(interEventT) % consider the event occurences up to event i
     bPost(i) = 99999 /(sum(interEventT(1:i))*99999+1); % substitute a finite b parameter for numerical convenience
 end
 meanRateNoCP = aPost .* bPost * 365; % multiply by 365 to get an annual rate
-
 % save('OKCPostRates.mat', 'params', 'rateVect', 'BF', 'probVectCP', 'meanRateCP', 'probVectNoCP', 'meanRateNoCP') % save results
 
 % load OKCPostRates % load previous results (to save time in re-computing)
@@ -52,11 +49,6 @@ numEvents = length(timesInYrs);
 freqRate = (1:numEvents) ./ (timesInYrs - startYear); % pure frequentist event rates
 exampleT = timesInYrs(eventIndices);
 
-% print selected results to screen
-% timesInYrs(eventIndices)-startYear % time interval
-% meanRateNoCP(eventIndices) % output selected rates to the screen
-% meanComposite(eventIndices) % output selected rate estimates
-% freqRate(eventIndices) % frequentist estimate
 
 %% plot cumulative counts
 
@@ -113,7 +105,6 @@ h4 = plot(exampleT(3), meanComposite(eventIndices(3)), 'or', 'Linewidth', 2);
 set(gca, 'ylim', yLimVals)
 set(gca, 'xlim', xLimVals)
 legh = legend([h1 h8 ], 'Mean posterior rate', 'Frequentist rate');
-% legh = legend([h1 h8 h2 h3 h4], 'Mean posterior rate', 'Frequentist rate', 'Time A', 'Time B', 'Time C');
 set(legh, 'Location','northwest', 'FontSize', label_size)
 hy = ylabel('Annual rate of M>3 earthquakes', 'FontSize', label_size);
 hx = xlabel('Year', 'FontSize', label_size);
